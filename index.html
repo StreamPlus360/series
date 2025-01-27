@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Séries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #001f3f, #00796b);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .navbar a {
+            color: #e2e8f0;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .logo {
+            width: 250px;
+            margin-top: 150px;
+            animation: pulse 1.5s infinite;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .search-bar {
+            margin-top: 30px;
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 50px 12px 15px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+
+        .search-bar input:focus {
+            border-color: #2563eb;
+            background-color: rgba(0, 0, 0, 0.8);
+            outline: none;
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar button:hover {
+            color: #2563eb;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+            margin-bottom: 70px;
+            padding: 0 20px;
+        }
+
+        .season-wrapper {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1 1 calc(20% - 20px);
+            max-width: calc(20% - 20px);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .season-wrapper:hover {
+            transform: scale(1.05);
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .season-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .season-title {
+            color: #e3f2fd;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .episodes {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .episodes a {
+            color: #00bcd4;
+            text-decoration: none;
+            margin-right: 10px;
+            font-size: 16px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .episodes a:hover {
+            text-decoration: underline;
+        }
+
+        .show-episodes {
+            color: #00bcd4;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal-content {
+            position: relative;
+            background: #222;
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 80%;
+        }
+
+        #videoPlayer {
+            width: 100%;
+            height: 600px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #e2e8f0;
+            background: rgba(255, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" data-genre="all">Todos</a>
+        <a href="#" data-genre="acao">Ação</a>
+        <a href="#" data-genre="animacao">Animação</a>
+        <a href="#" data-genre="aventura">Aventura</a>
+        <a href="#" data-genre="comedia">Comédia</a>
+        <a href="#" data-genre="drama">Drama</a>
+        <a href="#" data-genre="terror">Terror</a>
+        <a href="#" data-genre="romance">Romance</a>
+    </div>
+
+    <img class="logo" src="https://i.ibb.co/61b7LQH/Stream-02-01-2025.png" alt="Gameflix Logo">
+
+    <div class="search-bar">
+        <input type="text" placeholder="Pesquise por séries..." id="search">
+        <button onclick="searchSeries()">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+
+    <div class="container" id="seriesContainer"></div>
+
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">X</button>
+            <iframe id="videoPlayer" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script src="series.js"></script>
+    <script>
+        function renderSeries(filteredPosters = null) {
+            const container = document.getElementById('seriesContainer');
+            container.innerHTML = '';
+            
+            const postersToRender = filteredPosters || posters;
+            
+            postersToRender.forEach((poster, posterIndex) => {
+                const seasonWrapper = document.createElement('div');
+                seasonWrapper.classList.add('season-wrapper');
+                seasonWrapper.setAttribute('data-title', poster.name.toLowerCase());
+
+                const posterImage = document.createElement('img');
+                posterImage.src = poster.image;
+                posterImage.alt = poster.name;
+
+                const seasonContent = document.createElement('div');
+                const seasonTitle = document.createElement('div');
+                seasonTitle.classList.add('season-title');
+                seasonTitle.innerText = poster.name;
+
+                seasonContent.appendChild(seasonTitle);
+
+                poster.seasons.forEach((season, seasonIndex) => {
+                    const showEpisodesBtn = document.createElement('div');
+                    showEpisodesBtn.classList.add('show-episodes');
+                    showEpisodesBtn.innerText = `Mostrar ${season.seasonName}`;
+                    showEpisodesBtn.onclick = () => toggleEpisodes(posterIndex, seasonIndex);
+
+                    const episodesContainer = document.createElement('div');
+                    episodesContainer.classList.add('episodes');
+                    episodesContainer.id = `episodes-${posterIndex}-${seasonIndex}`;
+
+                    season.episodes.forEach(episode => {
+                        const episodeLink = document.createElement('a');
+                        episodeLink.href = "#";
+                        episodeLink.innerText = episode.name;
+                        episodeLink.onclick = (e) => {
+                            e.preventDefault();
+                            openModal(episode.url);
+                        };
+                        episodesContainer.appendChild(episodeLink);
+                    });
+
+                    seasonContent.appendChild(showEpisodesBtn);
+                    seasonContent.appendChild(episodesContainer);
+                });
+
+                seasonWrapper.appendChild(posterImage);
+                seasonWrapper.appendChild(seasonContent);
+                container.appendChild(seasonWrapper);
+            });
+        }
+
+        function searchSeries() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const filteredPosters = posters.filter(poster => 
+                poster.name.toLowerCase().includes(searchTerm)
+            );
+            renderSeries(filteredPosters);
+        }
+
+        document.getElementById('search').addEventListener('input', searchSeries);
+
+        function toggleEpisodes(posterIndex, seasonIndex) {
+            const episodes = document.getElementById(`episodes-${posterIndex}-${seasonIndex}`);
+            const showEpisodesBtn = episodes.previousElementSibling;
+            const isHidden = episodes.style.display === 'none' || !episodes.style.display;
+            
+            episodes.style.display = isHidden ? 'block' : 'none';
+            showEpisodesBtn.innerText = `${isHidden ? 'Ocultar' : 'Mostrar'} episódios ${posters[posterIndex].seasons[seasonIndex].seasonName}`;
+        }
+
+        function openModal(url) {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoPlayer');
+            iframe.src = url;
+            modal.style.display = 'flex';
+        }
+
+        document.getElementById('closeModal').onclick = function() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoPlayer');
+            iframe.src = '';
+            modal.style.display = 'none';
+        };
+
+        document.getElementById('videoModal').onclick = function(e) {
+            if (e.target === this) {
+                const iframe = document.getElementById('videoPlayer');
+                iframe.src = '';
+                this.style.display = 'none';
+            }
+        };
+
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const genre = e.target.getAttribute('data-genre');
+                
+                if (genre === 'all') {
+                    renderSeries();
+                } else {
+                    const filteredPosters = posters.filter(poster => 
+                        poster.genres && poster.genres.includes(genre)
+                    );
+                    renderSeries(filteredPosters);
+                }
+            });
+        });
+
+        window.onload = renderSeries;
+    </script>
+</body>
+</html>
