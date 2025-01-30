@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+    
         * {
             margin: 0;
             padding: 0;
@@ -30,14 +31,12 @@
             justify-content: center;
             align-items: center;
             background: rgba(0, 0, 0, 0.8);
-            padding: 15px 30px;
+            padding: 10px 30px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             width: 100%;
         }
 
@@ -48,7 +47,7 @@
             font-size: 16px;
             font-weight: 600;
             padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 30px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -59,7 +58,8 @@
 
         .logo {
             width: 250px;
-            margin-top: 150px;
+            margin-top: 120px;
+            margin-bottom: 40px;
             animation: pulse 1.5s infinite;
             margin-left: auto;
             margin-right: auto;
@@ -93,6 +93,7 @@
             border: 2px solid rgba(255, 255, 255, 0.5);
             background-color: rgba(0, 0, 0, 0.6);
             color: white;
+            transition: background-color 0.3s ease;
         }
 
         .search-bar input:focus {
@@ -112,9 +113,6 @@
             cursor: pointer;
             font-size: 18px;
             padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .search-bar button:hover {
@@ -123,68 +121,117 @@
 
         .container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            flex-direction: column;
+            gap: 40px;
             margin-top: 50px;
             margin-bottom: 70px;
             padding: 0 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .season-wrapper {
+        .series-wrapper {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
-            border-radius: 12px;
-            cursor: pointer;
+            border-radius: 15px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            flex: 1 1 calc(20% - 20px);
-            max-width: calc(20% - 20px);
-            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
-        .season-wrapper:hover {
-            transform: scale(1.05);
-            background-color: rgba(0, 0, 0, 0.8);
+        .series-poster {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
         }
 
-        .season-wrapper img {
-            width: 100%;
+        .series-poster img {
+            width: 150px;
             height: auto;
             border-radius: 12px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0; /* Impede que a imagem diminua */
+        }
+
+        .series-poster img:hover {
+            transform: scale(1.05);
+        }
+
+        .series-info {
+            flex: 1;
+        }
+
+        .series-title {
+            color: #e3f2fd;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .seasons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .season {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
         }
 
         .season-title {
-            color: #e3f2fd;
+            color: #00bcd4;
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .season-title i {
+            transition: transform 0.3s ease;
+        }
+
+        .season-title:hover i {
+            transform: rotate(90deg);
         }
 
         .episodes {
             display: none;
             margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
         }
 
         .episodes a {
             color: #00bcd4;
             text-decoration: none;
-            margin-right: 10px;
-            font-size: 16px;
-            display: block;
-            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .episodes a:hover {
-            text-decoration: underline;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
-        .show-episodes {
-            color: #00bcd4;
-            font-size: 14px;
-            margin-top: 10px;
-            cursor: pointer;
+        .episodes a i {
+            font-size: 16px;
         }
 
         .modal {
@@ -229,8 +276,35 @@
         .hidden {
             display: none !important;
         }
+
+        @media (max-width: 768px) {
+            .series-poster {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .series-poster img {
+                width: 100%;
+            }
+
+            .episodes {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar a {
+                font-size: 14px;
+            }
+
+            .episodes {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
     </style>
+      
 </head>
+
 <body>
     <div class="navbar">
         <a href="#" data-genre="all">Todos</a>
@@ -261,44 +335,53 @@
         </div>
     </div>
 
+    <!-- Inclua o arquivo series.js -->
     <script src="series.js"></script>
     <script>
+        // Função para renderizar as séries
         function renderSeries(filteredPosters = null) {
             const container = document.getElementById('seriesContainer');
             container.innerHTML = '';
             
             const postersToRender = filteredPosters || posters;
             
-            postersToRender.forEach((poster, posterIndex) => {
-                const seasonWrapper = document.createElement('div');
-                seasonWrapper.classList.add('season-wrapper');
-                seasonWrapper.setAttribute('data-title', poster.name.toLowerCase());
+            postersToRender.forEach((poster) => {
+                const seriesWrapper = document.createElement('div');
+                seriesWrapper.classList.add('series-wrapper');
+
+                const seriesPoster = document.createElement('div');
+                seriesPoster.classList.add('series-poster');
 
                 const posterImage = document.createElement('img');
                 posterImage.src = poster.image;
                 posterImage.alt = poster.name;
 
-                const seasonContent = document.createElement('div');
-                const seasonTitle = document.createElement('div');
-                seasonTitle.classList.add('season-title');
-                seasonTitle.innerText = poster.name;
+                const seriesInfo = document.createElement('div');
+                seriesInfo.classList.add('series-info');
 
-                seasonContent.appendChild(seasonTitle);
+                const seriesTitle = document.createElement('div');
+                seriesTitle.classList.add('series-title');
+                seriesTitle.innerText = poster.name;
 
-                poster.seasons.forEach((season, seasonIndex) => {
-                    const showEpisodesBtn = document.createElement('div');
-                    showEpisodesBtn.classList.add('show-episodes');
-                    showEpisodesBtn.innerText = `Mostrar ${season.seasonName}`;
-                    showEpisodesBtn.onclick = () => toggleEpisodes(posterIndex, seasonIndex);
+                const seasonsContainer = document.createElement('div');
+                seasonsContainer.classList.add('seasons');
+
+                poster.seasons.forEach((season) => {
+                    const seasonDiv = document.createElement('div');
+                    seasonDiv.classList.add('season');
+
+                    const seasonTitle = document.createElement('div');
+                    seasonTitle.classList.add('season-title');
+                    seasonTitle.innerHTML = `<i class="fas fa-chevron-right"></i> ${season.seasonName}`;
+                    seasonTitle.onclick = () => toggleEpisodes(seasonDiv);
 
                     const episodesContainer = document.createElement('div');
                     episodesContainer.classList.add('episodes');
-                    episodesContainer.id = `episodes-${posterIndex}-${seasonIndex}`;
 
                     season.episodes.forEach(episode => {
                         const episodeLink = document.createElement('a');
                         episodeLink.href = "#";
-                        episodeLink.innerText = episode.name;
+                        episodeLink.innerHTML = `<i class="fas fa-play"></i> ${episode.name}`;
                         episodeLink.onclick = (e) => {
                             e.preventDefault();
                             openModal(episode.url);
@@ -306,16 +389,30 @@
                         episodesContainer.appendChild(episodeLink);
                     });
 
-                    seasonContent.appendChild(showEpisodesBtn);
-                    seasonContent.appendChild(episodesContainer);
+                    seasonDiv.appendChild(seasonTitle);
+                    seasonDiv.appendChild(episodesContainer);
+                    seasonsContainer.appendChild(seasonDiv);
                 });
 
-                seasonWrapper.appendChild(posterImage);
-                seasonWrapper.appendChild(seasonContent);
-                container.appendChild(seasonWrapper);
+                seriesInfo.appendChild(seriesTitle);
+                seriesInfo.appendChild(seasonsContainer);
+                seriesPoster.appendChild(posterImage);
+                seriesPoster.appendChild(seriesInfo);
+                seriesWrapper.appendChild(seriesPoster);
+                container.appendChild(seriesWrapper);
             });
         }
 
+        // Função para mostrar/ocultar episódios
+        function toggleEpisodes(seasonDiv) {
+            const episodes = seasonDiv.querySelector('.episodes');
+            const isHidden = episodes.style.display === 'none' || !episodes.style.display;
+            episodes.style.display = isHidden ? 'grid' : 'none';
+            seasonDiv.querySelector('.season-title i').classList.toggle('fa-chevron-down', isHidden);
+            seasonDiv.querySelector('.season-title i').classList.toggle('fa-chevron-right', !isHidden);
+        }
+
+        // Função para pesquisar séries
         function searchSeries() {
             const searchTerm = document.getElementById('search').value.toLowerCase();
             const filteredPosters = posters.filter(poster => 
@@ -326,15 +423,7 @@
 
         document.getElementById('search').addEventListener('input', searchSeries);
 
-        function toggleEpisodes(posterIndex, seasonIndex) {
-            const episodes = document.getElementById(`episodes-${posterIndex}-${seasonIndex}`);
-            const showEpisodesBtn = episodes.previousElementSibling;
-            const isHidden = episodes.style.display === 'none' || !episodes.style.display;
-            
-            episodes.style.display = isHidden ? 'block' : 'none';
-            showEpisodesBtn.innerText = `${isHidden ? 'Ocultar' : 'Mostrar'} episódios ${posters[posterIndex].seasons[seasonIndex].seasonName}`;
-        }
-
+        // Função para abrir o modal com o vídeo
         function openModal(url) {
             const modal = document.getElementById('videoModal');
             const iframe = document.getElementById('videoPlayer');
@@ -342,6 +431,7 @@
             modal.style.display = 'flex';
         }
 
+        // Fechar o modal
         document.getElementById('closeModal').onclick = function() {
             const modal = document.getElementById('videoModal');
             const iframe = document.getElementById('videoPlayer');
@@ -349,6 +439,7 @@
             modal.style.display = 'none';
         };
 
+        // Fechar o modal ao clicar fora
         document.getElementById('videoModal').onclick = function(e) {
             if (e.target === this) {
                 const iframe = document.getElementById('videoPlayer');
@@ -357,6 +448,7 @@
             }
         };
 
+        // Filtrar séries por gênero
         document.querySelectorAll('.navbar a').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -373,7 +465,47 @@
             });
         });
 
+        // Renderizar as séries ao carregar a página
         window.onload = renderSeries;
     </script>
 </body>
+<!-- Modal para exibir o iframe da Wikipedia -->
+<div id="wikipedia-modal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" id="closeWikipediaModal">X</button>
+        <iframe id="wikipedia-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+    // Função para abrir o modal com o iframe da Wikipedia
+    function openWikipediaModal(seriesName) {
+        const modal = document.getElementById('wikipedia-modal');
+        const iframe = document.getElementById('wikipedia-iframe');
+        
+        // URL da página da Wikipedia
+        const wikipediaUrl = `https://pt.wikipedia.org/wiki/${encodeURIComponent(seriesName)}`;
+        iframe.src = wikipediaUrl;
+
+        // Exibe o modal
+        modal.style.display = 'flex';
+    }
+
+    // Fechar o modal
+    document.getElementById('closeWikipediaModal').onclick = function() {
+        const modal = document.getElementById('wikipedia-modal');
+        const iframe = document.getElementById('wikipedia-iframe');
+        iframe.src = ''; // Limpa o iframe
+        modal.style.display = 'none';
+    };
+
+    // Fechar o modal ao clicar fora
+    document.getElementById('wikipedia-modal').onclick = function(e) {
+        if (e.target === this) {
+            const iframe = document.getElementById('wikipedia-iframe');
+            iframe.src = '';
+            this.style.display = 'none';
+        }
+    };
+</script>
 </html>
