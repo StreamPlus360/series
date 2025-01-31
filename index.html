@@ -350,14 +350,17 @@
             <iframe id="videoPlayer" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
-
+    
+<!-- Inclua o arquivo series.js -->
+    <script src="series.js"></script>
     <script>
+      
         // Função para navegar para a página inicial na mesma guia
         function navigateToHome(event) {
             event.preventDefault();
             window.location.href = event.currentTarget.href;
         }
-
+        
         // Função para renderizar as séries
         function renderSeries(filteredPosters = null) {
             const container = document.getElementById('seriesContainer');
