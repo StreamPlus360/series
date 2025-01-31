@@ -75,8 +75,8 @@
 
         .logo {
             width: 250px;
-            margin-top: 130px; /* Reduzido de 120px para 80px */
-            margin-bottom: 20px; /* Reduzido de 40px para 20px */
+            margin-top: 130px;
+            margin-bottom: 20px;
             animation: pulse 1.5s infinite;
             margin-left: auto;
             margin-right: auto;
@@ -93,7 +93,7 @@
         }
 
         .search-bar {
-            margin-top: 20px; /* Reduzido de 30px para 20px */
+            margin-top: 20px;
             position: relative;
             width: 80%;
             max-width: 500px;
@@ -169,7 +169,7 @@
             height: auto;
             border-radius: 12px;
             transition: transform 0.3s ease;
-            flex-shrink: 0; /* Impede que a imagem diminua */
+            flex-shrink: 0;
         }
 
         .series-poster img:hover {
@@ -330,8 +330,7 @@
         <a href="#" data-genre="drama">Drama</a>
         <a href="#" data-genre="terror">Terror</a>
         <a href="#" data-genre="romance">Romance</a>
-        <!-- Botão Home adicionado -->
-        <a class="home-button" href="https://streamplus360.github.io/home/" target="_blank">Home 🏠</a>
+        <a class="home-button" href="https://streamplus360.github.io/home/" onclick="navigateToHome(event)">Home 🏠</a>
     </div>
 
     <img class="logo" src="https://i.ibb.co/61b7LQH/Stream-02-01-2025.png" alt="Gameflix Logo">
@@ -352,9 +351,13 @@
         </div>
     </div>
 
-    <!-- Inclua o arquivo series.js -->
-    <script src="series.js"></script>
     <script>
+        // Função para navegar para a página inicial na mesma guia
+        function navigateToHome(event) {
+            event.preventDefault();
+            window.location.href = event.currentTarget.href;
+        }
+
         // Função para renderizar as séries
         function renderSeries(filteredPosters = null) {
             const container = document.getElementById('seriesContainer');
@@ -486,43 +489,4 @@
         window.onload = renderSeries;
     </script>
 </body>
-<!-- Modal para exibir o iframe da Wikipedia -->
-<div id="wikipedia-modal" class="modal">
-    <div class="modal-content">
-        <button class="close-modal" id="closeWikipediaModal">X</button>
-        <iframe id="wikipedia-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-</div>
-
-<script>
-    // Função para abrir o modal com o iframe da Wikipedia
-    function openWikipediaModal(seriesName) {
-        const modal = document.getElementById('wikipedia-modal');
-        const iframe = document.getElementById('wikipedia-iframe');
-        
-        // URL da página da Wikipedia
-        const wikipediaUrl = `https://pt.wikipedia.org/wiki/${encodeURIComponent(seriesName)}`;
-        iframe.src = wikipediaUrl;
-
-        // Exibe o modal
-        modal.style.display = 'flex';
-    }
-
-    // Fechar o modal
-    document.getElementById('closeWikipediaModal').onclick = function() {
-        const modal = document.getElementById('wikipedia-modal');
-        const iframe = document.getElementById('wikipedia-iframe');
-        iframe.src = ''; // Limpa o iframe
-        modal.style.display = 'none';
-    };
-
-    // Fechar o modal ao clicar fora
-    document.getElementById('wikipedia-modal').onclick = function(e) {
-        if (e.target === this) {
-            const iframe = document.getElementById('wikipedia-iframe');
-            iframe.src = '';
-            this.style.display = 'none';
-        }
-    };
-</script>
 </html>
